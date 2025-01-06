@@ -97,3 +97,28 @@ Cypress.Commands.add('checkSEO', () => {
         cy.wrap($link).should('have.attr', 'href');
     });
 });
+
+Cypress.Commands.add('testZipcode', (zipcode: string, locationText?: string) => {
+    cy.visit('https://brident.hostedstaging3.com/appointments/');
+
+    // Wait for page to load
+    cy.wait(1000);
+
+    // Enter zipcode and submit
+    cy.get('input[name="zipcode"]').type(zipcode);
+    cy.get('button[type="submit"]').contains('Find your location').click();
+
+    // Wait for response
+    cy.wait(500);
+
+    // Verify cookie existence and value
+    cy.getCookie('zipcode').then((cookie) => {
+        expect(cookie).to.exist;
+        expect(cookie?.value).to.eq(zipcode);
+
+        // Check location text if provided
+        if (locationText) {
+            cy.get('section span').contains(locationText).should('exist');
+        }
+    });
+});
