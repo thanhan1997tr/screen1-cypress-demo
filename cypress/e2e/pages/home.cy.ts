@@ -3,9 +3,14 @@ describe('Home page', () => {
         cy.visit('https://highwaywestdev.wpenginepowered.com/');
     });
 
-    // Check that there is only one h1 tag on the homepage
-    it('Should have only 1 h1 tag', () => {
-        cy.get('h1').should('have.length', 1);
+    // Verify the presence of a single h1 tag
+    it('Checks for single h1 tag', () => {
+        cy.checkSingleH1();
+    });
+
+    // Verify all images have alt attributes
+    it('Checks all images have alt attributes', () => {
+        cy.checkAllImgHasAlt();
     });
 
     // Verify the order of sections on homepage by checking text within each section

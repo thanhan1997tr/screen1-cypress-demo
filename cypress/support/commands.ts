@@ -35,3 +35,55 @@
 //     }
 //   }
 // }
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            checkSingleH1(): Chainable<void>;
+            checkAllImgHasAlt(): Chainable<void>;
+            checkSizeImg(): Chainable<void>;
+        }
+    }
+}
+
+// Verify that the page contains exactly one h1 heading
+Cypress.Commands.add('checkSingleH1', () => {
+    cy.get('h1').should('have.length', 1);
+});
+
+// Verify that all images have non-empty alt attributes for accessibility
+Cypress.Commands.add('checkAllImgHasAlt', () => {
+    cy.get('img').each(($el) => {
+        cy.wrap($el).should('have.attr', 'alt').and('not.be.empty');
+    });
+});
+
+// Verify that all images are under the size limit (1MB)
+Cypress.Commands.add('checkSizeImg', () => {
+    const SIZE_LIMIT_MB = 1;
+
+    cy.get('img').each(($el) => {
+        const imgSrc = $el.attr('src');
+        cy.wrap($el).should('have.attr', 'src');
+
+        if (imgSrc) {
+            cy.request(imgSrc).then((response) => {
+                const contentType = Array.isArray(response.headers['content-type'])
+                    ? response.headers['content-type'][0]
+                    : response.headers['content-type'];
+                const isImageType = contentType.startsWith('image/');
+                const fileSize = isImageType ? Number(response.headers['content-length']) : new Blob([response.body]).size;
+                const fileSizeInMB = (fileSize / 1048576).toFixed(2);
+
+                if (Number(fileSizeInMB) > SIZE_LIMIT_MB) {
+                    cy.log(`Image Details:
+                        Source: ${imgSrc}
+                        Size: ${fileSizeInMB} MB
+                        Type: ${contentType}`);
+                    throw new Error(`Image exceeds size limit (${fileSizeInMB}MB > ${SIZE_LIMIT_MB}MB)`);
+                }
+            });
+        }
+    });
+});
+
+export {};
