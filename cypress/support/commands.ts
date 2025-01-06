@@ -35,16 +35,6 @@
 //     }
 //   }
 // }
-declare global {
-    namespace Cypress {
-        interface Chainable {
-            checkSingleH1(): Chainable<void>;
-            checkAllImgHasAlt(): Chainable<void>;
-            checkSizeImg(): Chainable<void>;
-            checkSEO(): Chainable<void>;
-        }
-    }
-}
 
 // Verify that the page contains exactly one h1 heading
 Cypress.Commands.add('checkSingleH1', () => {
@@ -107,5 +97,3 @@ Cypress.Commands.add('checkSEO', () => {
         cy.wrap($link).should('have.attr', 'href');
     });
 });
-
-export {};
