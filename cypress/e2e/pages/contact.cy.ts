@@ -19,4 +19,9 @@ describe('Contact page', () => {
     it('Check size of images', () => {
         cy.checkSizeImg();
     });
+
+    // check SEO
+    it('Check SEO', () => {
+        cy.checkSEO();
+    });
 });

@@ -41,6 +41,7 @@ declare global {
             checkSingleH1(): Chainable<void>;
             checkAllImgHasAlt(): Chainable<void>;
             checkSizeImg(): Chainable<void>;
+            checkSEO(): Chainable<void>;
         }
     }
 }
@@ -83,6 +84,30 @@ Cypress.Commands.add('checkSizeImg', () => {
                 }
             });
         }
+    });
+});
+
+Cypress.Commands.add('checkSEO', () => {
+    // Check meta title
+    cy.get('head title').should('exist');
+
+    // Check meta description
+    cy.get('head meta[name="description"]').should('exist');
+
+    // Check canonical URL
+    cy.get('head link[rel="canonical"]').should('exist');
+
+    // Check meta viewport
+    cy.get('head meta[name="viewport"]').should('exist');
+
+    // Check heading hierarchy
+    cy.get('h1').then(($h1s) => {
+        expect($h1s.length).to.be.at.most(1);
+    });
+
+    // Check all links have href
+    cy.get('a').each(($link) => {
+        cy.wrap($link).should('have.attr', 'href');
     });
 });
 
