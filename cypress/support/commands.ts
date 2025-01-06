@@ -75,13 +75,10 @@ Cypress.Commands.add('checkSizeImg', () => {
                 const fileSize = isImageType ? Number(response.headers['content-length']) : new Blob([response.body]).size;
                 const fileSizeInMB = (fileSize / 1048576).toFixed(2);
 
-                if (Number(fileSizeInMB) > SIZE_LIMIT_MB) {
-                    cy.log(`Image Details:
-                        Source: ${imgSrc}
-                        Size: ${fileSizeInMB} MB
-                        Type: ${contentType}`);
-                    throw new Error(`Image exceeds size limit (${fileSizeInMB}MB > ${SIZE_LIMIT_MB}MB)`);
-                }
+                expect(Number(fileSizeInMB)).to.be.at.most(
+                    SIZE_LIMIT_MB,
+                    `Image ${imgSrc} size (${fileSizeInMB}MB) exceeds limit of ${SIZE_LIMIT_MB}MB\n` + `Type: ${contentType}`,
+                );
             });
         }
     });
