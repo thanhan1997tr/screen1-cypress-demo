@@ -21,4 +21,10 @@ describe('Home page', () => {
             cy.wrap($el).contains(new RegExp(sections[index], 'i'));
         });
     });
+
+    // Check h2 font-size on mobile homepage
+    it('Checks h2 font-size on mobile viewport', () => {
+        cy.viewport('iphone-6');
+        cy.get('.hero-section .title-home h2').should('have.css', 'font-size', '45px');
+    });
 });
