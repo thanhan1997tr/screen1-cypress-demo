@@ -9,5 +9,6 @@ export default defineConfig({
             // implement node event listeners here
         },
         // baseUrl: process.env.BASE_URL,
+        testIsolation: false,
     },
 });
