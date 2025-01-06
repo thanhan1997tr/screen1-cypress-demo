@@ -1,0 +1,30 @@
+{
+    "menuItems": [
+        { "text": "Careers", "url": "/careers" },
+        { "text": "In The Desert", "url": "/in-the-desert" },
+        { "text": "In The Mountains", "url": "/in-the-mountains" },
+        { "text": "In Wine Country", "url": "/in-wine-country" },
+        { "text": "By The Ocean", "url": "/by-the-ocean" },
+        { "text": "Press", "url": "/press" },
+        { "text": "Contact", "url": "/contact-us" }
+    ],
+    "mainMenu": ["Careers", "OUR LOCATIONS", "Press", "Contact"],
+    "desktopMainMenuTypography": {
+        "fontFamily": "Poppins-Bold, \"sans-serif\"",
+        "fontSize": "19px",
+        "color": "rgb(96, 114, 95)",
+        "fontWeight": "400",
+        "lineHeight": "19px",
+        "letterSpacing": "2px",
+        "textTransform": "uppercase"
+    },
+    "desktopSubMenuTypography": {
+        "fontFamily": "Poppins-Bold, \"sans-serif\"",
+        "fontSize": "19px",
+        "color": "rgb(255, 255, 255)",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "2px",
+        "textTransform": "uppercase"
+    }
+}
