@@ -99,8 +99,6 @@ Cypress.Commands.add('checkSEO', () => {
 });
 
 Cypress.Commands.add('testZipcode', (zipcode: string, locationText?: string) => {
-    cy.visit('https://brident.hostedstaging3.com/appointments/');
-
     // Wait for page to load
     cy.wait(1000);
 
