@@ -4,6 +4,5 @@ declare namespace Cypress {
         checkAllImgHasAlt(): Chainable<void>;
         checkSizeImg(): Chainable<void>;
         checkSEO(): Chainable<void>;
-        testZipcode(zipcode: string, locationText?: string): Chainable<void>;
     }
 }
