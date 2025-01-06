@@ -58,4 +58,12 @@ describe('Header Menu Desktop Tests', () => {
             });
         });
     });
+
+    describe('Mobile Menu Tests', () => {
+        it('Should open mobile menu', () => {
+            cy.viewport('iphone-6');
+            cy.get('header #hamburger').click().should('have.class', 'open');
+            cy.get('#menu-my-custom-menu-1').should('be.visible');
+        });
+    });
 });
