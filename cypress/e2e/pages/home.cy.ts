@@ -5,7 +5,7 @@ describe('Home page', () => {
 
     // Verify the presence of a single h1 tag
     it('Checks for single h1 tag', () => {
-        cy.checkSingleH1();
+        cy.get('h1').should('have.length', 1);
     });
 
     // Verify all images have alt attributes
