@@ -33,6 +33,8 @@ describe('Zipcode Cookie Functionality', () => {
 
 // Helper function to verify cookie
 function verifyCookie(expectedValue: string) {
+    cy.wait(500);
+
     cy.getCookie('cookie_true_zipcode').then((cookie) => {
         expect(cookie).to.exist;
         expect(cookie?.value).to.eq(expectedValue);

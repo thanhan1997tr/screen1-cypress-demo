@@ -6,9 +6,25 @@ describe('Cookie Tests', () => {
 
         cy.wait(1000);
 
-        // Enter zipcode and submit
-        cy.get('input[name="zipcode"]').type(zipcode);
-        cy.get('button[type="submit"]').contains('Find your location').click();
+        const handleZipcodeInput = (zipcode: string) => {
+            cy.get('input[name="zipcode"]').clear().type(zipcode);
+            cy.get('.btn-box-gray.btn-find-location').click();
+        };
+
+        cy.get('.btn-box-gray').then((button) => {
+            if (button.text().includes('Find your location')) {
+                handleZipcodeInput(zipcode);
+            } else {
+                cy.get('.btn-box-gray').then((btn) => {
+                    if (btn.text().includes('Change location')) {
+                        cy.get('.btn-box-gray.btn-change-location').click();
+                    } else {
+                        cy.get('.btn-box-gray.btn-enter-zipcode').click();
+                    }
+                });
+                handleZipcodeInput(zipcode);
+            }
+        });
 
         // Wait for response
         cy.wait(500);
@@ -33,7 +49,7 @@ describe('Cookie Tests', () => {
         testZipcode('76103', 'You appear to be in Fort Worth, TX');
     });
 
-    it('should set and verify cookie for Fort Worth area', () => {
+    it('should set and verify cookie for San Antonio area', () => {
         testZipcode('78221', 'You appear to be in San Antonio, TX');
     });
 });
