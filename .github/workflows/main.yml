@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Run Cypress Tests
 
 on:
     push:
@@ -10,14 +10,33 @@ on:
 
 jobs:
     cypress-run:
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
+
         steps:
-            - name: Checkout
+            # 1. Checkout code từ repository
+            - name: Checkout code
               uses: actions/checkout@v4
-            # Install npm dependencies, cache them correctly
-            # and run all Cypress tests
-            - name: Cypress run
-              uses: cypress-io/github-action@v6
+
+            # 2. Thiết lập Node.js
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
               with:
-                  build: npm run build
-                  start: npm start
+                  node-version: 'lts/*'
+
+            # 3. Cài đặt dependencies
+            - name: Install dependencies
+              run: npm install
+
+            # 4. Chạy Cypress tests
+            - name: Run Cypress
+              run: npx cypress run
+
+            # 5. Lưu video và ảnh (tùy chọn)
+            - name: Archive Cypress videos and screenshots
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: cypress-artifacts
+                  path: |
+                      cypress/videos/
+                      cypress/screenshots/
